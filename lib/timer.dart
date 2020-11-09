@@ -5,11 +5,19 @@ import 'package:my_time_app_flutter/models/timer_model.dart';
 import "./models/timer_model.dart";
 
 class CountDownTimer {
+  int work = 1;
   double _radius = 1;
   bool _isActive = true;
   Timer timer;
   Duration _time;
   Duration _fullTime;
+
+  void startWork() {
+    _radius = 1;
+    _time = Duration(minutes: this.work, seconds: 0);
+    _fullTime = _time;
+  }
+
   String returnTime(Duration t) {
     String minutes = t.inMinutes < 10
         ? "0" + t.inMinutes.toString()

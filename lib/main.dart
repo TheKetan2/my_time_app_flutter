@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_time_app_flutter/models/timer_model.dart';
 import 'package:my_time_app_flutter/widgets/productivity_button.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'timer.dart';
 
 final double defaultPadding = 5.0;
 void main() {
@@ -23,8 +25,11 @@ class MyApp extends StatelessWidget {
 }
 
 class TimerHomePage extends StatelessWidget {
+  final CountDownTimer timer = CountDownTimer();
+
   @override
   Widget build(BuildContext context) {
+    timer.startWork();
     return Scaffold(
       appBar: AppBar(
         title: Text("My work timer"),
@@ -73,23 +78,30 @@ class TimerHomePage extends StatelessWidget {
                 ],
               ),
               Expanded(
-                  child: CircularPercentIndicator(
-                radius: availableWidth / 2,
-                lineWidth: 10.0,
-                percent: 0.2,
-                center: Text(
-                  "30:00",
-                  style: Theme.of(context).textTheme.headline2,
-                ),
-                progressColor: Color(0xff009688),
-              )),
+                  child: StreamBuilder<TimerModel>(
+                      stream: timer.stream(),
+                      builder: (context, snapshot) {
+                        TimerModel timer = (snapshot.data == "00:00")
+                            ? TimerModel(time: "00:00", percent: 1)
+                            : snapshot.data;
+                        return CircularPercentIndicator(
+                          radius: availableWidth / 2,
+                          lineWidth: 10.0,
+                          percent: timer.percent,
+                          center: Text(
+                            timer.time,
+                            style: Theme.of(context).textTheme.headline2,
+                          ),
+                          progressColor: Color(0xff009688),
+                        );
+                      })),
               Row(
                 children: [
                   Padding(
                     padding: EdgeInsets.all(defaultPadding),
                   ),
                   /**
-                   * TODO: start from page 93 Streams provider
+                   * TODO: start from page 113 implimenting stream 
                    * 
                    */
                   Expanded(
