@@ -11,10 +11,18 @@ class CountDownTimer {
   Timer timer;
   Duration _time;
   Duration _fullTime;
+  int shortBreak = 1;
+  int longBreak = 5;
 
   void startWork() {
     _radius = 1;
     _time = Duration(minutes: this.work, seconds: 0);
+    _fullTime = _time;
+  }
+
+  void startBreak(bool isShort) {
+    _radius = 1;
+    _time = Duration(minutes: (isShort ? shortBreak : longBreak), seconds: 0);
     _fullTime = _time;
   }
 
@@ -27,6 +35,16 @@ class CountDownTimer {
         numSeconds < 10 ? "0" + numSeconds.toString() : numSeconds.toString();
     String formattedTime = minutes + ":" + seconds;
     return formattedTime;
+  }
+
+  void stopTimer() {
+    this._isActive = false;
+  }
+
+  void startTimer() {
+    if (_time.inSeconds > 0) {
+      this._isActive = true;
+    }
   }
 
   Stream<TimerModel> stream() async* {

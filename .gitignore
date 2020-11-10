@@ -42,3 +42,6 @@ app.*.map.json
 
 # Exceptions to above rules.
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+
+
+# Udacity 4QECT7HDWYPLKNU3  4QECT7HDWYPLKNU3
