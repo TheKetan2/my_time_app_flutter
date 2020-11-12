@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_time_app_flutter/models/timer_model.dart';
+import 'package:my_time_app_flutter/settings_Screen.dart';
 import 'package:my_time_app_flutter/widgets/productivity_button.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'timer.dart';
@@ -14,12 +15,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'My work timer',
       theme: ThemeData(
         primarySwatch: Colors.grey,
         bottomSheetTheme:
             BottomSheetThemeData(backgroundColor: Colors.transparent),
-        // visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: TimerHomePage(),
     );
@@ -29,12 +30,38 @@ class MyApp extends StatelessWidget {
 class TimerHomePage extends StatelessWidget {
   final CountDownTimer timer = CountDownTimer();
 
+  void gotoSettings(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SettingsScreen(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final List<PopupMenuItem<String>> menuItems = List<PopupMenuItem<String>>();
+    menuItems.add(PopupMenuItem(
+      value: "Settings",
+      child: Text("Settings"),
+    ));
     timer.startWork();
     return Scaffold(
       appBar: AppBar(
         title: Text("My work timer"),
+        actions: [
+          PopupMenuButton<String>(
+            onSelected: (s) {
+              if (s == "Settings") {
+                gotoSettings(context);
+              }
+            },
+            itemBuilder: (BuildContext conext) {
+              return menuItems.toList();
+            },
+          )
+        ],
       ),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
@@ -109,7 +136,7 @@ class TimerHomePage extends StatelessWidget {
                     padding: EdgeInsets.all(defaultPadding),
                   ),
                   /**
-                   * TODO: start from page 113 implimenting stream 
+                   * TODO: start from page 117 setting routes
                    * 
                    */
                   Expanded(
