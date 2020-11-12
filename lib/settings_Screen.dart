@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_time_app_flutter/settings.dart';
 
 class SettingsScreen extends StatelessWidget {
   @override
@@ -7,9 +8,7 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("Settings"),
       ),
-      body: Container(
-        child: Text("Hello World"),
-      ),
+      body: Settings(),
     );
   }
 }
