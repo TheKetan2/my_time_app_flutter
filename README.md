@@ -6,4 +6,5 @@
     - Navigation
 
 ## Screenshot
-[!]("./assets/screen.gif")
+
+![Screenshot](assets/screen.gif)
