@@ -4,8 +4,18 @@ class SettingButton extends StatelessWidget {
   final Color color;
   final String text;
   final int value;
+  final int size;
+  final String settings;
+  final Function callback;
 
-  const SettingButton({Key key, this.color, this.text, this.value})
+  const SettingButton(
+      {Key key,
+      this.color,
+      this.text,
+      this.value,
+      this.size,
+      this.settings,
+      this.callback})
       : super(key: key);
 
   @override
@@ -15,8 +25,9 @@ class SettingButton extends StatelessWidget {
         this.text,
         style: TextStyle(color: Colors.white),
       ),
-      onPressed: () => null,
+      onPressed: this.callback,
       color: this.color,
+      // minWidth: this.size,
     );
   }
 }

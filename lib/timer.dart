@@ -1,7 +1,7 @@
 import "dart:async";
 
 import 'package:my_time_app_flutter/models/timer_model.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import "./models/timer_model.dart";
 
 class CountDownTimer {
@@ -11,10 +11,21 @@ class CountDownTimer {
   Timer timer;
   Duration _time;
   Duration _fullTime;
+
   int shortBreak = 1;
   int longBreak = 5;
 
+  Future readSetings() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    work = prefs.getInt("workTime") == null ? 30 : prefs.getInt("workTime");
+    shortBreak =
+        prefs.getInt("shortBreak") == null ? 30 : prefs.getInt("shortBreak");
+    longBreak = work =
+        prefs.getInt("longBreak") == null ? 30 : prefs.getInt("longBreak");
+  }
+
   void startWork() {
+    readSetings();
     _radius = 1;
     _time = Duration(minutes: this.work, seconds: 0);
     _fullTime = _time;
